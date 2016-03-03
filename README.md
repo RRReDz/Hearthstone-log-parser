@@ -2,7 +2,7 @@
 Extract informations from hearthstone log file
 
 ## Instalation
-    npm install hearthstone-log-parser
+    npm i hearthstone-log-parser
 ## Usage
 
     var HsLogParser = require('hearthstone-log-parser');

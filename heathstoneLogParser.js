@@ -54,7 +54,6 @@ HeathstoneLogParser.prototype.zoneChangeTest = function(value) {
 		toZone: group[8]
 	};
 
-	console.log(data);
 	this.emit('action', data);
 };
 
@@ -70,7 +69,6 @@ HeathstoneLogParser.prototype.gameStartTest = function(value) {
 	this.players.push(data);
 
 	if (this.players.length == 2) {
-		console.log(this.players);
 		this.emit('match-start', this.players);
 	}
 };
@@ -88,8 +86,8 @@ HeathstoneLogParser.prototype.gameOverTest = function(value) {
 	this.matchResult.push(data);
 
 	if (this.matchResult.length == 2) {
-		console.log(this.matchResult);
 		this.emit('match-over', this.matchResult);
+		this.players = [];
 	}
 };
 
