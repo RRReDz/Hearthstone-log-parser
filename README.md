@@ -32,20 +32,17 @@ data example:
 
 data example:
 
-	[   
-	    { 
-		class: "Uther Lightbringer"
-		name: "Agent47",
-		side: "OPPOSING"
-	      team: 1
-	    },
-	    {
-		class: "Garrosh Hellscream"
-		name: "Player457",
-		side: "FRIENDLY"
-	      team: 2
-	    } 
-	]
+	[{
+	  class: "Uther Lightbringer"
+	  name: "Agent47",
+	  side: "OPPOSING"
+	  team: 1
+	}, {
+	  class: "Garrosh Hellscream"
+	  name: "Player457",
+	  side: "FRIENDLY"
+	  team: 2
+	}]
 
 ### Game over
 
@@ -55,22 +52,19 @@ data example:
 
 data example:
 
-	[   
-	    { 
-		class: "Uther Lightbringer"
-		name: "Agent47",
-		side: "OPPOSING"
-	      status: "LOST" ,
-	      team: 1
-	    },
-	    {
-		class: "Garrosh Hellscream"
-		name: "Player457",
-		side: "FRIENDLY"
-	      status: "WON" ,
-	      team: 2
-	    } 
-	]
+	[{
+	  class: "Uther Lightbringer"
+	  name: "Agent47",
+	  side: "OPPOSING"
+	  status: "LOST",
+	  team: 1
+	}, {
+	  class: "Garrosh Hellscream"
+	  name: "Player457",
+	  side: "FRIENDLY"
+	  status: "WON",
+	  team: 2
+	}]
 	 
 ## The MIT License
 > Copyright (c) 2015 Felipe Baravieira
