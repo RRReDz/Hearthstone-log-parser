@@ -2,7 +2,7 @@
 Extract informations from hearthstone log file
 
 ## Instalation
-    npm i hearthstone-log-parser
+    npm install hearthstone-log-parser
 ## Usage
 
     var HsLogParser = require('hearthstone-log-parser');
@@ -32,8 +32,20 @@ data example:
 
 data example:
 
-	[ { name: 'Agent475', team_id: '2' },
-	  { name: 'Player 1', team_id: '1' } ]
+	[   
+	    { 
+		class: "Uther Lightbringer"
+		name: "Agent47",
+		side: "OPPOSING"
+	      team: 1
+	    },
+	    {
+		class: "Garrosh Hellscream"
+		name: "Player457",
+		side: "FRIENDLY"
+	      team: 2
+	    } 
+	]
 
 ### Game over
 
@@ -43,8 +55,22 @@ data example:
 
 data example:
 
-	[ { name: 'Agent47', status: 'LOST' },
-	  { name: 'Player 1', status: 'WON' } ]
+	[   
+	    { 
+		class: "Uther Lightbringer"
+		name: "Agent47",
+		side: "OPPOSING"
+	      status: "LOST" ,
+	      team: 1
+	    },
+	    {
+		class: "Garrosh Hellscream"
+		name: "Player457",
+		side: "FRIENDLY"
+	      status: "WON" ,
+	      team: 2
+	    } 
+	]
 	 
 ## The MIT License
 > Copyright (c) 2015 Felipe Baravieira

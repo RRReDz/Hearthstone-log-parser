@@ -7,7 +7,6 @@ var _ = require('lodash');
 function HeathstoneLogParser() {
 	this.logFile = this.getLogPath();
 	this.players = [];
-	this.matchResult = [];
 
 	_.bindAll(this, 'getLogPath', 'core', 'zoneChangeTest');
 
@@ -34,8 +33,21 @@ HeathstoneLogParser.prototype.core = function(data) {
 	_(data).forEach(analizer);
 
 	function analizer(line) {
-		self.zoneChangeTest(line) || self.gameOverTest(line) || self.gameStartTest(line);
+		self.zoneChangeTest(line) || self.gameOverTest(line) || self.gameStartTest(line) || self.playersTest(line);
 	}
+};
+
+HeathstoneLogParser.prototype.playersTest = function(value) {
+	var playersTest = /TRANSITIONING card \[name=(.+) id=.+ zone=.+ zonePos=.+ cardId=.+ player=(\d)\] to (OPPOSING|FRIENDLY) PLAY \(Hero\)/;
+	var group = playersTest.exec(value);
+	if (group === null) return false;
+
+	var data = {
+		class: group[1],
+		team: parseInt(group[2], 10),
+		side: group[3]
+	};
+	this.mergePlayers(data, 'team');
 };
 
 HeathstoneLogParser.prototype.zoneChangeTest = function(value) {
@@ -64,11 +76,13 @@ HeathstoneLogParser.prototype.gameStartTest = function(value) {
 
 	var data = {
 		name: group[1],
-		team_id: group[2]
+		team: parseInt(group[2], 10)
 	};
-	this.players.push(data);
 
-	if (this.players.length == 2) {
+	this.mergePlayers(data, 'team');
+
+	if (this.players.length === 2) {
+		console.log(this.players);
 		this.emit('match-start', this.players);
 	}
 };
@@ -83,11 +97,30 @@ HeathstoneLogParser.prototype.gameOverTest = function(value) {
 		status: group[2]
 	};
 
-	this.matchResult.push(data);
+	this.mergePlayers(data, 'name');
 
-	if (this.matchResult.length == 2) {
-		this.emit('match-over', this.matchResult);
+	if (this.players[0].status && this.players[1].status) {
+		this.emit('match-over', this.players);
 		this.players = [];
+	}
+};
+
+HeathstoneLogParser.prototype.mergePlayers = function(data, key) {
+	if (key === 'team') {
+		var player = _.find(this.players, {
+			team: data.team
+		});
+
+		if (_.isEmpty(player)) {
+			this.players.push(data);
+			return;
+		}
+	}
+
+	for (var i = this.players.length - 1; i >= 0; i--) {
+		if (_.isEqual(this.players[i][key], data[key])) {
+			_.merge(this.players[i], data);
+		}
 	}
 };
 
