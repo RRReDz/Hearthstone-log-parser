@@ -82,7 +82,6 @@ HeathstoneLogParser.prototype.gameStartTest = function(value) {
 	this.mergePlayers(data, 'team');
 
 	if (this.players.length === 2) {
-		console.log(this.players);
 		this.emit('match-start', this.players);
 	}
 };
