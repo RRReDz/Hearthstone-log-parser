@@ -33,14 +33,14 @@ data example:
 data example:
 
 	[{
-	  class: "Uther Lightbringer"
+	  class: "Uther Lightbringer",
 	  name: "Agent47",
-	  side: "OPPOSING"
+	  side: "OPPOSING",
 	  team: 1
 	}, {
-	  class: "Garrosh Hellscream"
+	  class: "Garrosh Hellscream",
 	  name: "Player457",
-	  side: "FRIENDLY"
+	  side: "FRIENDLY",
 	  team: 2
 	}]
 
@@ -53,15 +53,15 @@ data example:
 data example:
 
 	[{
-	  class: "Uther Lightbringer"
+	  class: "Uther Lightbringer",
 	  name: "Agent47",
-	  side: "OPPOSING"
+	  side: "OPPOSING",
 	  status: "LOST",
 	  team: 1
 	}, {
-	  class: "Garrosh Hellscream"
+	  class: "Garrosh Hellscream",
 	  name: "Player457",
-	  side: "FRIENDLY"
+	  side: "FRIENDLY",
 	  status: "WON",
 	  team: 2
 	}]
