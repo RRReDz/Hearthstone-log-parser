@@ -98,7 +98,7 @@ HeathstoneLogParser.prototype.gameOverTest = function(value) {
 
 	this.mergePlayers(data, 'name');
 
-	if (this.players[0].status && this.players[1].status) {
+	if (this.players.length === 2 && this.players[0].status && this.players[1].status) {
 		this.emit('match-over', this.players);
 		this.players = [];
 	}
@@ -114,6 +114,11 @@ HeathstoneLogParser.prototype.mergePlayers = function(data, key) {
 			this.players.push(data);
 			return;
 		}
+	} else
+	if (key === 'name' && this.players.length === 0) {
+		//case tracker opened in the middle of a match
+		this.players.push(data);
+		return;
 	}
 
 	for (var i = this.players.length - 1; i >= 0; i--) {
