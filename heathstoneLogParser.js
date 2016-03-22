@@ -43,7 +43,8 @@ HeathstoneLogParser.prototype.playersTest = function(value) {
 	if (group === null) return false;
 
 	var data = {
-		class: group[1],
+		hero: group[1],
+		class: this.className(group[1]),
 		team: parseInt(group[2], 10),
 		side: group[3]
 	};
@@ -126,6 +127,45 @@ HeathstoneLogParser.prototype.mergePlayers = function(data, key) {
 			_.merge(this.players[i], data);
 		}
 	}
+};
+
+HeathstoneLogParser.prototype.className = function(heroName) {
+	heroName = heroName.toLowerCase();
+	var result = heroName;
+	switch (heroName) {
+		case 'malfurion stormrage':
+			result = 'druid';
+			break;
+		case 'alleria':
+		case 'rexxar':
+			result = 'hunter';
+			break;
+		case 'jaina proudmoore':
+		case 'medivh':
+			result = 'mage';
+			break;
+		case 'uther lightbringer':
+		case 'liadrin':
+			result = 'paladin';
+			break;
+		case 'anduin wrynn':
+			result = 'priest';
+			break;
+		case 'valeera sanguinar':
+			result = 'rogue';
+			break;
+		case 'thrall':
+			result = 'shaman';
+			break;
+		case 'gul\'dan':
+			result = 'warlock';
+			break;
+		case 'garrosh hellscream':
+		case 'magni':
+			result = 'warrior';
+			break;
+	}
+	return result;
 };
 
 module.exports = HeathstoneLogParser;
