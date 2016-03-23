@@ -7,6 +7,7 @@ var _ = require('lodash');
 function HeathstoneLogParser() {
 	this.logFile = this.getLogPath();
 	this.players = [];
+	this.isPlayerSet = false;
 
 	_.bindAll(this, 'getLogPath', 'core', 'zoneChangeTest');
 
@@ -42,6 +43,7 @@ HeathstoneLogParser.prototype.playersTest = function(value) {
 	var group = playersTest.exec(value);
 	if (group === null) return false;
 
+	this.isPlayerSet = true;
 	var data = {
 		hero: group[1],
 		class: this.className(group[1]),
@@ -102,6 +104,7 @@ HeathstoneLogParser.prototype.gameOverTest = function(value) {
 	if (this.players.length === 2 && this.players[0].status && this.players[1].status) {
 		this.emit('match-over', this.players);
 		this.players = [];
+		this.isPlayerSet = false;
 	}
 };
 
@@ -116,7 +119,7 @@ HeathstoneLogParser.prototype.mergePlayers = function(data, key) {
 			return;
 		}
 	} else
-	if (key === 'name' && this.players.length === 0) {
+	if (!this.isPlayerSet) {
 		//case tracker opened in the middle of a match
 		this.players.push(data);
 		return;
