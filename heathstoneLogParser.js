@@ -136,7 +136,7 @@ HeathstoneLogParser.prototype.className = function(heroName) {
 		case 'malfurion stormrage':
 			result = 'druid';
 			break;
-		case 'alleria':
+		case 'alleria windrunner':
 		case 'rexxar':
 			result = 'hunter';
 			break;
@@ -145,7 +145,7 @@ HeathstoneLogParser.prototype.className = function(heroName) {
 			result = 'mage';
 			break;
 		case 'uther lightbringer':
-		case 'liadrin':
+		case 'lady liadrin':
 			result = 'paladin';
 			break;
 		case 'anduin wrynn':
@@ -161,7 +161,7 @@ HeathstoneLogParser.prototype.className = function(heroName) {
 			result = 'warlock';
 			break;
 		case 'garrosh hellscream':
-		case 'magni':
+		case 'magni bronzebeard':
 			result = 'warrior';
 			break;
 	}
