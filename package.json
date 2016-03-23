@@ -1,6 +1,6 @@
 {
   "name": "hearthstone-log-parser",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Extracts information from hearthstone log file",
   "main": "heathstoneLogParser.js",
   "dependencies": {
