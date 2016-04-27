@@ -1,11 +1,11 @@
 {
   "name": "hearthstone-log-parser",
-  "version": "1.4.3",
+  "version": "1.4.5",
   "description": "Extracts information from hearthstone log file",
   "main": "hearthstone-log-parser.js",
   "dependencies": {
-    "tail-observable": "^1.0.0",
-    "lodash": "^4.5.1"
+    "lodash": "^4.5.1",
+    "tail-f": "^1.2.1"
   },
   "devDependencies": {},
   "scripts": {
