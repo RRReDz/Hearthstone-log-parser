@@ -1,14 +1,18 @@
 # hearthstone-log-parser
-Extract informations from hearthstone log file
+Extract information from hearthstone log file, parsing log entries in good shape objects.
+It's easy to use, enjoy!
 
 ## Instalation
     npm install hearthstone-log-parser
 ## Usage
+###Defining and initializing
 
     var HsLogParser = require('hearthstone-log-parser');
     var hsParser = new HsLogParser();
 
-### extracting actions
+### Extracting actions
+When some card goes to some zone to another this event will be triggered.
+
     hsParser.on('action', function(data) {
     	console.log(data);
     });
@@ -25,6 +29,7 @@ data example:
 	 toZone: 'HAND' }
 
 ### Game start
+Event is triggered at the moment that the match start. Return players information.
 
     hsParser.on('match-start', function(data) {
     	console.log(data);
@@ -47,6 +52,7 @@ data example:
 	}]
 
 ### Game over
+Event is triggered when game is over, you can get detailed players information and who won.
 
     hsParser.on('match-over', function(data) {
     	console.log(data);
@@ -69,25 +75,13 @@ data example:
 	  status: "WON",
 	  team: 2
 	}]
-	 
-## The MIT License
-> Copyright (c) 2015 Felipe Baravieira
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
 
-> The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+### Notes
+- It's legal, use it without concerns.
+- In the project github repository you will find an naive example.
+- You can look an real app implementation in: https://github.com/FelipeBB/hearthstone-radar
+
+
+This project is under **MIT** license.

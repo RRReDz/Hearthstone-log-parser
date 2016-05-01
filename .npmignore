@@ -1,0 +1,5 @@
+.idea
+*.iml
+examples/
+.npmignore
+.editorconfig

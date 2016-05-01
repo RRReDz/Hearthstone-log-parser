@@ -16,25 +16,34 @@ function HeathstoneLogParser() {
     this.players = [];
     this.isPlayerSet = false;
 
-    var tailObservable = new Tailf(this.logFile);
-    tailObservable.on('change', this.core);
+    var tail = new Tailf(this.logFile);
+    tail.on('change', this.core);
 }
 
 HeathstoneLogParser.prototype = Object.create(EventEmitter.prototype);
 
 /**
- * get the right location of hearthstone log based on OS
+ * return the right location of hearthstone log based on OS
+ * also overwrite log.config
  */
 HeathstoneLogParser.prototype.getLogPath = function () {
+    var fs = require('fs');
+    var configFile = '';
+    var logFile = '';
+
     if (_.isEqual(os.type(), 'Windows_NT')) {
         var fileSystem = 'Program Files';
         if (_.isEqual(os.arch(), 'x64')) {
             fileSystem += ' (x86)';
         }
-        return path.join('C:', fileSystem, 'Hearthstone', 'Hearthstone_Data', 'output_log.txt');
+        configFile = path.resolve(process.env.LOCALAPPDATA, 'Blizzard', 'Hearthstone', 'log.config');
+        logFile = path.resolve('C:', fileSystem, 'Hearthstone', 'Hearthstone_Data', 'output_log.txt');
     } else {
-        return path.join(process.env.HOME, 'Library', 'Logs', 'Unity', 'Player.log');
+        configFile = path.resolve(process.env.HOME, 'Library', 'Preferences', 'Blizzard', 'Hearthstone', 'log.config');
+        logFile = path.resolve(process.env.HOME, 'Library', 'Logs', 'Unity', 'Player.log');
     }
+    fs.createReadStream(path.resolve(__dirname, 'log.config')).pipe(fs.createWriteStream(configFile));
+    return logFile;
 };
 
 /**
@@ -42,7 +51,7 @@ HeathstoneLogParser.prototype.getLogPath = function () {
  * @param {Array. <String>} data
  */
 HeathstoneLogParser.prototype.core = function (data) {
-    _(data).forEach(analyzer);
+    _(data).forEach(analyzer.bind(this));
 
     function analyzer(line) {
         this.zoneChangeTest(line) || this.gameOverTest(line) || this.gameStartTest(line) || this.playersTest(line);
