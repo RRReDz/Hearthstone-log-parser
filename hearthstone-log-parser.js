@@ -3,16 +3,17 @@ var EventEmitter = require('events').EventEmitter;
 var path = require('path');
 var os = require('os');
 var _ = require('lodash');
+var fs = require('fs');
 
 /**
  * analyze hearthstone log entries and emmit events
  * with relevant parsed information
  * @constructor
  */
-function HeathstoneLogParser() {
+function HeathstoneLogParser(hsPath) {
     _.bindAll(this, 'getLogPath', 'core', 'zoneChangeTest');
 
-    this.logFile = this.getLogPath();
+    this.logFile = this.getLogPath(hsPath);
     this.players = [];
     this.isPlayerSet = false;
 
@@ -26,18 +27,13 @@ HeathstoneLogParser.prototype = Object.create(EventEmitter.prototype);
  * return the right location of hearthstone log based on OS
  * also overwrite log.config
  */
-HeathstoneLogParser.prototype.getLogPath = function () {
-    var fs = require('fs');
+HeathstoneLogParser.prototype.getLogPath = function (hsPath) {
     var configFile = '';
     var logFile = '';
 
     if (_.isEqual(os.type(), 'Windows_NT')) {
-        var fileSystem = 'Program Files';
-        if (_.isEqual(os.arch(), 'x64')) {
-            fileSystem += ' (x86)';
-        }
         configFile = path.resolve(process.env.LOCALAPPDATA, 'Blizzard', 'Hearthstone', 'log.config');
-        logFile = path.resolve('C:', fileSystem, 'Hearthstone', 'Hearthstone_Data', 'output_log.txt');
+	logFile = !hsPath ? findLogFileWin() :  (hsPath + '\\Hearthstone_Data\\output_log.txt');
     } else {
         configFile = path.resolve(process.env.HOME, 'Library', 'Preferences', 'Blizzard', 'Hearthstone', 'log.config');
         logFile = path.resolve(process.env.HOME, 'Library', 'Logs', 'Unity', 'Player.log');
@@ -45,6 +41,7 @@ HeathstoneLogParser.prototype.getLogPath = function () {
     fs.createReadStream(path.resolve(__dirname, 'log.config')).pipe(fs.createWriteStream(configFile));
     return logFile;
 };
+
 
 /**
  * process the new lines of log file
@@ -216,5 +213,11 @@ HeathstoneLogParser.prototype.className = function (heroName) {
     }
     return result;
 };
+
+function findLogFileWin() {
+    var fileSystem = 'Program Files';
+    fileSystem += _.isEqual(os.arch(), 'x64') ? ' (x86)' : '';
+    return path.resolve('C:', fileSystem, 'Hearthstone', 'Hearthstone_Data', 'output_log.txt');
+}
 
 module.exports = HeathstoneLogParser;

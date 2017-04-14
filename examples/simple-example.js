@@ -1,6 +1,7 @@
 var HsParser = require('../hearthstone-log-parser');
 
 
+//hsParser = new HsParser('D:\\Battle.net\\Hearthstone');
 hsParser = new HsParser();
 
 
